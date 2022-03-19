@@ -4,7 +4,7 @@ import './App.css';
 import SearchIcon from './search.svg';
 import { MoviesCard } from './MoviesCard';
 
-const API_URL = ' http://www.omdbapi.com/?apikey=71ee1e37';
+const API_URL = `${process.env.REACT_APP_API_URL}?apikey=${process.env.REACT_APP_API_KEY}`;
 
 // const demoMovieData = {
 //   Poster:
@@ -24,13 +24,13 @@ function App() {
     const res = await fetch(`${API_URL}&s=${movie}`);
     const data = await res.json();
 
-    console.log(data);
+    // console.log(data);
     setMovies(data.Search);
   };
 
   //* this effect will automatically render the searchMovies function
   useEffect(() => {
-    searchMovies('batman');
+    searchMovies('');
   }, []);
 
   return (
@@ -54,12 +54,12 @@ function App() {
       {movies?.length > 0 ? (
         <div className='container'>
           {movies.map((movie, i) => (
-            <MoviesCard movie={movie} key={i} />
+            <MoviesCard movie={movie} key={i}/>
           ))}
         </div>
       ) : (
         <div className='empty'>
-          <h2>NO MOVIES FOUNDS BRAAA...😐</h2>
+          <h2>NO MOVIES FOUND BRAAA...😐</h2>
         </div>
       )}
     </div>
