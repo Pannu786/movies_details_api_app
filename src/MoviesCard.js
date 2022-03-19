@@ -1,23 +1,23 @@
-export const MoviesCard = ({ demoMovieData }) => {
+export const MoviesCard = ({ movie }) => {
   return (
     <div className='movie'>
       <div>
-        <p>{demoMovieData.Year}</p>
+        <p>{movie.Year}</p>
       </div>
       <div>
         <img
           src={
-            demoMovieData.Poster !== 'N/A'
-              ? demoMovieData.Poster
+            movie.Poster !== 'N/A'
+              ? movie.Poster
               : 'https://via.placeholder.com/400'
           }
-          alt={demoMovieData.Title}
+          alt={movie.Title}
         />
       </div>
 
       <div>
-        <span>{demoMovieData.Type}</span>
-        <h3>{demoMovieData.Title}</h3>
+        <span>{movie.Type}</span>
+        <h3>{movie.Title}</h3>
       </div>
     </div>
   );

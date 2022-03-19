@@ -1,32 +1,36 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
 import './App.css';
 import SearchIcon from './search.svg';
 import { MoviesCard } from './MoviesCard';
 
-const API_URL = 'http://www.omdbapi.com/?apikey=71ee1e37';
+const API_URL = ' http://www.omdbapi.com/?apikey=71ee1e37';
 
-const demoMovieData = {
-  Poster:
-    "https://m.media-amazon.com/images/M/'MV5BOTdlMzdmNDAtYTIyNi00ZWZiLWE3ZDYtOTg2YzE3NDRkNTYwXkEyXkFqcGdeQXVyODQ4NjA3Mw@@._V1_SX300.jpg",
-  Title: "American Pie Presents: Girls' Rules",
-  Type: 'movie',
-  Year: '2020',
-  imdbID: 'tt11771594',
-};
+// const demoMovieData = {
+//   Poster:
+//     "https://m.media-amazon.com/images/M/'MV5BOTdlMzdmNDAtYTIyNi00ZWZiLWE3ZDYtOTg2YzE3NDRkNTYwXkEyXkFqcGdeQXVyODQ4NjA3Mw@@._V1_SX300.jpg",
+//   Title: "American Pie Presents: Girls' Rules",
+//   Type: 'movie',
+//   Year: '2020',
+//   imdbID: 'tt11771594',
+// };
 
 function App() {
+  const [movies, setMovies] = useState([]);
+  const [search, setSearch] = useState('');
+
   //* this is a fetching logic that will fetch the data from the API
   const searchMovies = async (movie) => {
     const res = await fetch(`${API_URL}&s=${movie}`);
     const data = await res.json();
 
-    console.table(data);
+    console.log(data);
+    setMovies(data.Search);
   };
 
   //* this effect will automatically render the searchMovies function
   useEffect(() => {
-    searchMovies('american pie');
+    searchMovies('batman');
   }, []);
 
   return (
@@ -36,15 +40,28 @@ function App() {
       <div className='search'>
         <input
           placeholder='Search for movies...'
-          value='Batman'
-          onChange={() => {}}
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
         />
-        <img src={SearchIcon} alt='search' onClick={() => {}} />
+        <img
+          src={SearchIcon}
+          alt='search'
+          onClick={(e) => {
+            searchMovies(search);
+          }}
+        />
       </div>
-
-      <div className='container'>
-        <MoviesCard demoMovieData={demoMovieData} />
-      </div>
+      {movies?.length > 0 ? (
+        <div className='container'>
+          {movies.map((movie, i) => (
+            <MoviesCard movie={movie} key={i} />
+          ))}
+        </div>
+      ) : (
+        <div className='empty'>
+          <h2>NO MOVIES FOUNDS BRAAA...😐</h2>
+        </div>
+      )}
     </div>
   );
 }
