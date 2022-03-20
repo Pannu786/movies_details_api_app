@@ -29,9 +29,9 @@ function App() {
   };
 
   //* this effect will automatically render the searchMovies function
-  useEffect(() => {
-    searchMovies('');
-  }, []);
+  // useEffect(() => {
+  //   searchMovies('');
+  // }, []);
 
   return (
     <div className='app'>
